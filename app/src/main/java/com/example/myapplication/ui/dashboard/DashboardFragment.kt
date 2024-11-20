@@ -96,7 +96,7 @@ class DashboardFragment : Fragment() {
             val ssid = result.SSID
             val bssid = result.BSSID
             val capabilities = result.capabilities
-            Log.d("DashboardFragment", "SSID: $result, BSSID: $bssid, Capabilities: $capabilities")
+            Log.d("DashboardFragment", "SSID: $ssid, BSSID: $bssid, Capabilities: $capabilities")
         }
     }
 

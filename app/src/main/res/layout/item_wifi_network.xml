@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/darker_gray" />
 
     <TextView
         android:id="@+id/frequency_text_view"
@@ -28,7 +28,7 @@
         android:textColor="@android:color/darker_gray" />
 
     <TextView
-        android:id="@+id/location_text_view"
+        android:id="@+id/level_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"

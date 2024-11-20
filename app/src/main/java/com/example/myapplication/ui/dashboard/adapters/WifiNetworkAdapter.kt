@@ -15,7 +15,7 @@ class WifiNetworkAdapter(private val wifiList: List<ScanResult>, private val num
         val ssidTextView: TextView = itemView.findViewById(R.id.ssid_text_view)
         val frequencyTextView: TextView = itemView.findViewById(R.id.frequency_text_view)
         val channelTextView: TextView = itemView.findViewById(R.id.channel_text_view)
-        val locationTextView: TextView = itemView.findViewById(R.id.location_text_view)
+        val levelTextView: TextView = itemView.findViewById(R.id.level_text_view)
     }
 
     // Create new views (invoked by the layout manager)
@@ -29,11 +29,11 @@ class WifiNetworkAdapter(private val wifiList: List<ScanResult>, private val num
     override fun onBindViewHolder(holder: WifiViewHolder, position: Int) {
         // Get the Wi-Fi network at the current position
         val wifiNetwork = wifiList[position]
-        // Set the SSID, frequency (converted to GHz), channel, and location in the respective TextViews
+        // Set the SSID, frequency (converted to GHz), channel, and level in dB in the respective TextViews
         holder.ssidTextView.text = wifiNetwork.SSID
         holder.frequencyTextView.text = "Frequency: ${wifiNetwork.frequency / 1000.0} GHz" // Convert MHz to GHz
         holder.channelTextView.text = "Channel: ${getChannelFromFrequency(wifiNetwork.frequency)}"
-        holder.locationTextView.text = "Location: ${wifiNetwork.BSSID}" // You can replace this with actual location data if available
+        holder.levelTextView.text = "Level: ${wifiNetwork.level} dBm" // Display signal level in dB
     }
 
     // Return the size of the dataset (invoked by the layout manager)
