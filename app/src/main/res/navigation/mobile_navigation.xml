@@ -11,6 +11,12 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
+     <fragment
+        android:id="@+id/navigation_bluetooth"
+        android:name="com.example.myapplication.ui.bluetooth.BluetoothDevicesFragment"
+        android:label="@string/title_bluetooth"
+        tools:layout="@layout/fragment_bluetooth_devices" />
+        
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.myapplication.ui.dashboard.DashboardFragment"
