@@ -47,6 +47,11 @@ class DashboardFragment : Fragment() {
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
 
+        // Set up the refresh button
+        binding.refreshButton.setOnClickListener {
+            checkPermissions() // Check permissions and fetch available Wi-Fi networks
+        }
+
         // Check for permissions and fetch available Wi-Fi networks
         checkPermissions()
 
