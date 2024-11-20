@@ -9,6 +9,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,12 +54,24 @@ class BluetoothDevicesFragment : Fragment() {
     }
 
     private fun checkBluetoothPermissions() {
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED ||
-            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.BLUETOOTH_ADMIN) != PackageManager.PERMISSION_GRANTED) {
-            // Request permissions
-            ActivityCompat.requestPermissions(requireActivity(),
-                arrayOf(Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN),
-                REQUEST_PERMISSION_BT)
+        val permissionsNeeded = mutableListOf<String>()
+
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
+            permissionsNeeded.add(Manifest.permission.BLUETOOTH)
+        }
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.BLUETOOTH_ADMIN) != PackageManager.PERMISSION_GRANTED) {
+            permissionsNeeded.add(Manifest.permission.BLUETOOTH_ADMIN)
+        }
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+            permissionsNeeded.add(Manifest.permission.BLUETOOTH_SCAN)
+        }
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+            permissionsNeeded.add(Manifest.permission.BLUETOOTH_CONNECT)
+        }
+
+        if (permissionsNeeded.isNotEmpty()) {
+            // Request the permissions
+            ActivityCompat.requestPermissions(requireActivity(), permissionsNeeded.toTypedArray(), REQUEST_PERMISSION_BT)
         } else {
             // Permissions are granted, start discovery
             startBluetoothDiscovery()
@@ -80,6 +93,10 @@ class BluetoothDevicesFragment : Fragment() {
             if (BluetoothDevice.ACTION_FOUND == action) {
                 // Get the BluetoothDevice object from the Intent
                 val device: BluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)!!
+                
+                // Log the device name and address
+                Log.d("BluetoothDevicesFragment", "Discovered device: ${device.name}, Address: ${device.address}")
+
                 // Add the device to the adapter
                 bluetoothDeviceAdapter.addDevice(device)
             }
@@ -96,11 +113,11 @@ class BluetoothDevicesFragment : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             REQUEST_PERMISSION_BT -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    // Permission granted, start discovery
+                if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                    // All permissions granted, start discovery
                     startBluetoothDiscovery()
                 } else {
-                    // Permission denied, handle accordingly
+                    // Handle the case where permissions are denied
                     // You can show a message to the user or disable Bluetooth features
                 }
             }
