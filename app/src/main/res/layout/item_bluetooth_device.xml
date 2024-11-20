@@ -9,7 +9,7 @@
         android:id="@+id/device_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/darker_gray"
         android:textSize="18sp"
         android:textStyle="bold" />
 

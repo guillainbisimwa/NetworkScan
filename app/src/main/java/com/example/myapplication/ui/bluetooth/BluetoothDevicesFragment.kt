@@ -27,6 +27,7 @@ class BluetoothDevicesFragment : Fragment() {
     private lateinit var bluetoothDeviceAdapter: BluetoothDeviceAdapter
     private lateinit var recyclerView: RecyclerView
     private val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
+    private var deviceCount = 0 // Variable to keep track of the number of devices found
 
     private val binding get() = _binding!!
 
@@ -93,12 +94,20 @@ class BluetoothDevicesFragment : Fragment() {
             if (BluetoothDevice.ACTION_FOUND == action) {
                 // Get the BluetoothDevice object from the Intent
                 val device: BluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)!!
-                
+
+                // Get the device name or use the MAC address as a fallback
+                val deviceName = device.name ?: "Unknown Device"
+                val deviceAddress = device.address
+
                 // Log the device name and address
-                Log.d("BluetoothDevicesFragment", "Discovered device: ${device.name}, Address: ${device.address}")
+                Log.d("BluetoothDevicesFragment", "Discovered device: $deviceName, Address: $deviceAddress")
 
                 // Add the device to the adapter
                 bluetoothDeviceAdapter.addDevice(device)
+
+                // Increment the device count and update the TextView
+                deviceCount++
+                binding.numberOfDevicesTextView.text = "Number of devices found: $deviceCount"
             }
         }
     }
