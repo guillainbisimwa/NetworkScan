@@ -79,10 +79,13 @@ class DashboardFragment : Fragment() {
         // Log the number of networks found
         Log.d("DashboardFragment", "Number of networks found: ${scanResults.size}")
 
+        // Update the number of networks found TextView
+        binding.numberOfNetworksTextView.text = "Number of networks found: ${scanResults.size}"
+
         // Check if scanResults is not empty
         if (scanResults.isNotEmpty()) {
             // Initialize the adapter with the scan results
-            wifiNetworkAdapter = WifiNetworkAdapter(scanResults)
+            wifiNetworkAdapter = WifiNetworkAdapter(scanResults, binding.numberOfNetworksTextView)
             recyclerView.adapter = wifiNetworkAdapter
         } else {
             Log.d("DashboardFragment", "No Wi-Fi networks found.")
@@ -93,7 +96,7 @@ class DashboardFragment : Fragment() {
             val ssid = result.SSID
             val bssid = result.BSSID
             val capabilities = result.capabilities
-            Log.d("DashboardFragment", "SSID: $ssid, BSSID: $bssid, Capabilities: $capabilities")
+            Log.d("DashboardFragment", "SSID: $result, BSSID: $bssid, Capabilities: $capabilities")
         }
     }
 
