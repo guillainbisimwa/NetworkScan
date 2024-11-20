@@ -43,16 +43,11 @@ class DashboardFragment : Fragment() {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        // Initialize RecyclerView
+        // Initialize RecyclerView to display Wi-Fi networks
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        val textView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-
-        // Check permissions and fetch available networks
+        // Check for permissions and fetch available Wi-Fi networks
         checkPermissions()
 
         return root
@@ -76,12 +71,17 @@ class DashboardFragment : Fragment() {
         // Get the scan results
         val scanResults: List<ScanResult> = wifiManager.scanResults
 
-        // Update the ViewModel with the fetched Wi-Fi networks
-        dashboardViewModel.setWifiNetworks(scanResults)
+        // Log the number of networks found
+        Log.d("DashboardFragment", "Number of networks found: ${scanResults.size}")
 
-        // Initialize the adapter with the scan results
-        wifiNetworkAdapter = WifiNetworkAdapter(scanResults)
-        recyclerView.adapter = wifiNetworkAdapter
+        // Check if scanResults is not empty
+        if (scanResults.isNotEmpty()) {
+            // Initialize the adapter with the scan results
+            wifiNetworkAdapter = WifiNetworkAdapter(scanResults)
+            recyclerView.adapter = wifiNetworkAdapter
+        } else {
+            Log.d("DashboardFragment", "No Wi-Fi networks found.")
+        }
 
         // Log the network details
         for (result in scanResults) {
