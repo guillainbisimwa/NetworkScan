@@ -100,7 +100,7 @@ class BluetoothDevicesFragment : Fragment() {
                 val deviceAddress = device.address
 
                 // Log the device name and address
-                Log.d("BluetoothDevicesFragment", "Discovered device: $deviceName, Address: $deviceAddress")
+                Log.d("BluetoothDevicesFragment", "Discovered device: $device, Address: $deviceAddress")
 
                 // Add the device to the adapter
                 bluetoothDeviceAdapter.addDevice(device)
