@@ -34,4 +34,8 @@ class BluetoothDeviceAdapter : RecyclerView.Adapter<BluetoothDeviceAdapter.Bluet
         devices.add(device)
         notifyItemInserted(devices.size - 1)
     }
+
+    fun getDevices(): List<BluetoothDevice> {
+        return devices
+    }
 }

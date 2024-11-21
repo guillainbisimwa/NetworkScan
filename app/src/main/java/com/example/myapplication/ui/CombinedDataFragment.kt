@@ -16,9 +16,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.ui.bluetooth.BluetoothDevicesFragment
-import com.example.myapplication.ui.cellular.CellularNetworksFragment
-import com.example.myapplication.ui.dashboard.DashboardFragment
 import java.io.File
 import java.io.FileWriter
 
@@ -46,7 +43,11 @@ class CombinedDataFragment : Fragment() {
         fetchData()
 
         exportButton.setOnClickListener {
-            exportDataToCSV()
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                exportDataToCSV()
+            } else {
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
+            }
         }
 
         return view
@@ -66,19 +67,16 @@ class CombinedDataFragment : Fragment() {
 
     private fun fetchBluetoothData() {
         // Implement Bluetooth data fetching logic here
-        // Add data to combinedData list
         combinedData.add("Bluetooth Device: DeviceName, Location: LocationInfo")
     }
 
     private fun fetchWifiData() {
         // Implement Wi-Fi data fetching logic here
-        // Add data to combinedData list
         combinedData.add("Wi-Fi Network: NetworkName, Location: LocationInfo")
     }
 
     private fun fetchCellularData() {
         // Implement Cellular data fetching logic here
-        // Add data to combinedData list
         combinedData.add("Cellular Network: NetworkName, Location: LocationInfo")
     }
 
