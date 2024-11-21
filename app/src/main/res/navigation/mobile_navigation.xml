@@ -23,9 +23,9 @@
         android:label="@string/title_cellular"
         tools:layout="@layout/fragment_cellular_networks" />
 
-    <fragment
+    <!-- <fragment
         android:id="@+id/navigation_combined_data"
         android:name="com.example.myapplication.ui.CombinedDataFragment"
         android:label="@string/title_combined_data"
-        tools:layout="@layout/fragment_combined_data" />
+        tools:layout="@layout/fragment_combined_data" /> -->
 </navigation>
